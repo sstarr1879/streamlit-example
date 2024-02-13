@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  app:
+    image: 073831181504.dkr.ecr.us-east-2.amazonaws.com/streamlit/app:latest
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    expose:
+      - "8501"
+  
+  nginx:
+    image: 073831181504.dkr.ecr.us-east-2.amazonaws.com/streamlit/nginx:latest
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - app
